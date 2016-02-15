@@ -247,6 +247,7 @@ function tooltip() {
 
     d3.selectAll('#reset')
         .on('click', function () {
+            d3.event.preventDefault();
             var filter = d3.select('#filter').node();
             filter.value = '';
             setTimeout(update, 0);
