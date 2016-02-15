@@ -76,7 +76,7 @@ text {
 }
 
 .chart > * {
-    cursor: default;
+    cursor: pointer;
 }
 
 .tooltip {
