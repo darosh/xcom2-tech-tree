@@ -8,14 +8,22 @@ Based on XML data from [mstum/xcom2](https://github.com/mstum/xcom2) project.
 
 ### Install
 
-```npm install```
+```
+npm install
+```
 
-```bower install```
+```
+bower install
+```
 
 ### Build
 
-```gulp```
+```
+gulp
+```
 
-### Publish to Github pages
+### Publish
 
-```gulp publish```
+```
+gulp publish
+```
