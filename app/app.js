@@ -204,7 +204,7 @@ function getCostTable(item) {
             for (i = 0; i < item.instantCost.length; i++) {
                 for (k in item.instantCost[i]) {
                     r[k] = r[k] || [];
-                    r[k][i] += ' (' + item.instantCost[i][k] + ')';
+                    r[k][i] += '/' + item.instantCost[i][k];
                 }
             }
         }
