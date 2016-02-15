@@ -193,8 +193,6 @@ function hide() {
             }
         }
     });
-
-    console.log(XCOM_TECH_TREE);
 }
 
 function getCostTable(item) {
