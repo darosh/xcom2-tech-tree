@@ -111,8 +111,8 @@ function chart() {
 
     render(root, g);
     root.attr('transform', 'translate(' + [1.5, 1.5] + ')');
-    svg.attr('height', g.graph().height + 3);
-    svg.attr('width', g.graph().width + 3);
+    svg.attr('height', ((g.graph().height > 0) ? g.graph().height : 0) + 3);
+    svg.attr('width', ((g.graph().width > 0) ? g.graph().width : 0) + 3);
 
     INITIALIZED = true;
 
@@ -150,6 +150,7 @@ function reset() {
 
 function update() {
     reset();
+    hideTooltip();
 
     var filter = d3.select('#filter').node().value;
 
@@ -181,7 +182,7 @@ function isVisible(item) {
         }
     }
 
-    return false;
+    return !item.disable;
 }
 
 function hide() {
@@ -232,10 +233,34 @@ function getCostTable(item) {
     return '';
 }
 
+function hideTooltip() {
+    var div = d3.select('.tooltip');
+
+    div
+        .style('opacity', 0)
+        .style('left', 0 + 'px')
+        .style('top', 0 + 'px');
+}
+
 function tooltip() {
     var div = d3.select('.tooltip');
 
-    d3.selectAll('svg.chart .node').on('mousemove', function (d) {
+    d3.selectAll('#reset')
+        .on('click', function () {
+            var filter = d3.select('#filter').node();
+            filter.value = '';
+            setTimeout(update, 0);
+        });
+
+
+    d3.selectAll('svg.chart .node')
+        .on('click', function (d) {
+            var item = XCOM_TECH_TREE[d];
+            var filter = d3.select('#filter').node();
+            filter.value = item.title;
+            setTimeout(update, 0);
+        })
+        .on('mousemove', function (d) {
             var item = XCOM_TECH_TREE[d];
 
             item.table = item.table || getCostTable(item);
@@ -251,7 +276,5 @@ function tooltip() {
                 .style('left', (d3.event.pageX + 28) + 'px')
                 .style('top', (d3.event.pageY) + 'px');
         })
-        .on('mouseout', function (d) {
-            div.style('opacity', 0);
-        });
+        .on('mouseout', hideTooltip);
 }
