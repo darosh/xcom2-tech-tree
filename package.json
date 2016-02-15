@@ -1,0 +1,12 @@
+{
+  "name": "xcom2-tech-tree",
+  "description": "xcom2-tech-tree dev dependencies",
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-gh-pages": "^0.5.4",
+    "require-dir": "^0.3.0",
+    "xml2js": "^0.4.16"
+  }
+}

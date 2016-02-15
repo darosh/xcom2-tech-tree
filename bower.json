@@ -1,0 +1,9 @@
+{
+  "name": "xcom2-tech-tree",
+  "description": "xcom2-tech-tree dependecies",
+  "private": true,
+  "dependencies": {
+    "dagre-d3": "^0.4.17",
+    "XCom2TechTree": "https://raw.githubusercontent.com/mstum/xcom2/master/techtree/XComTT/XComTT/XCom2TechTree.xml"
+  }
+}

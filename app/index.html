@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XCOM 2 Tech Tree</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.15/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre-d3/0.4.17/dagre-d3.min.js"></script>
+</head>
+<body>
+<h1 class="pull-left">XCOM 2 Tech Tree</h1>
+<a class="pull-right" href="#">Github</a>
+<div class="clear"></div>
+<hr>
+<input class="pull-left" type="text" id="filter" autofocus>
+<svg class="legend pull-right">
+    <g></g>
+</svg>
+<div class="clear"></div>
+<hr>
+<svg class="chart">
+    <g></g>
+</svg>
+<div class="tooltip"></div>
+<script src="./xcom-tech-tree.min.js"></script>
+<script src="./app.js"></script>
+<script>
+    run();
+</script>
+</body>
+</html>

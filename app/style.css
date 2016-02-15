@@ -1,0 +1,134 @@
+html, body {
+    margin: 0;
+}
+
+body {
+    padding: 14px 14px 28px 14px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+svg {
+    display: block;
+}
+
+h1 {
+    margin: 0;
+}
+
+hr {
+    margin: 14px 0;
+    border: 0;
+    height: 1px;
+    background: #ccc;
+}
+
+input {
+    height: 22px;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+text {
+    font-size: 14px;
+}
+
+.node rect {
+    stroke: #666;
+    stroke-opacity: 0.3;
+    stroke-width: 1.5px;
+    shape-rendering: geometricPrecision;
+}
+
+.node text {
+    fill: #333;
+}
+
+.edgePath path {
+    stroke: #666;
+    stroke-opacity: 0.7;
+    stroke-width: 1.5px;
+}
+
+.disabled {
+    fill-opacity: 0.2;
+    stroke-opacity: 0.2;
+}
+
+.legend > * {
+    cursor: pointer;
+    font-style: italic;
+}
+
+.chart > * {
+    cursor: default;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 7px;
+    font-size: 14px;
+    border: 1px solid #666;
+    border-radius: 2px;
+    pointer-events: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+}
+
+.tooltip hr {
+    margin: 7px 0;
+    background: #666;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    padding-right: 14px;
+}
+
+td {
+    text-align: right;
+}
+
+.building {
+    fill: #bfeda8;
+    background-color: #bfeda8;
+}
+
+.research {
+    fill: #eda6af;
+    background-color: #eda6af;
+}
+
+.proving {
+    fill: #eddaa6;
+    background-color: #eddaa6;
+}
+
+.items {
+    fill: #a6deed;
+    background-color: #a6deed;
+}
+
+.drop {
+    fill: #eda6ed;
+    background-color: #eda6ed;
+}
+
+.misc {
+    fill: #cccccc;
+    background-color: #cccccc;
+}
