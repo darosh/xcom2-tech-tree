@@ -111,8 +111,9 @@ function chart() {
 
     render(root, g);
     root.attr('transform', 'translate(' + [1.5, 1.5] + ')');
-    svg.attr('height', ((g.graph().height > 0) ? g.graph().height : 0) + 3);
-    svg.attr('width', ((g.graph().width > 0) ? g.graph().width : 0) + 3);
+    svg.transition().duration(INITIALIZED ? 250 : 0)
+        .attr('height', ((g.graph().height > 0) ? g.graph().height : 0) + 3)
+        .attr('width', ((g.graph().width > 0) ? g.graph().width : 0) + 3);
 
     INITIALIZED = true;
 
