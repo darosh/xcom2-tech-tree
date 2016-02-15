@@ -2,6 +2,11 @@ var DISABLED = {};
 var LEGEND_GRAPH;
 var TYPES = ['building', 'research', 'proving', 'item', 'drop', 'misc'];
 var INITIALIZED = false;
+var RENDER = new dagreD3.render();
+var SVG = d3.select('svg.chart');
+var ROOT = SVG.select('g');
+var DIV = d3.select('.tooltip');
+var FILTER = d3.select('#filter');
 
 function run() {
     LEGEND_GRAPH = legend();
@@ -30,9 +35,6 @@ function legend() {
             rankdir: 'TB',
             nodesep: 20,
             ranksep: 20
-        })
-        .setDefaultEdgeLabel(function () {
-            return {};
         });
 
 
@@ -48,11 +50,10 @@ function legend() {
         });
     });
 
-    var render = new dagreD3.render();
     var svg = d3.select('svg.legend');
     var root = svg.select('g');
 
-    render(root, g);
+    RENDER(root, g);
     root.attr('transform', 'translate(' + [1.5, 1.5] + ')');
     svg.attr('height', g.graph().height + 3);
     svg.attr('width', g.graph().width + 3);
@@ -66,9 +67,6 @@ function chart() {
             rankdir: 'LR',
             nodesep: 20,
             ranksep: 20
-        })
-        .setDefaultEdgeLabel(function () {
-            return {};
         });
 
     XCOM_TECH_TREE.forEach(function (item, index) {
@@ -101,17 +99,13 @@ function chart() {
         }
     });
 
-    var render = new dagreD3.render();
-    var svg = d3.select('svg.chart');
-    var root = svg.select('g');
-
     g.graph().transition = INITIALIZED ? function (selection) {
         return selection.transition().duration(250);
     } : null;
 
-    render(root, g);
-    root.attr('transform', 'translate(' + [1.5, 1.5] + ')');
-    svg.transition().duration(INITIALIZED ? 250 : 0)
+    RENDER(ROOT, g);
+    ROOT.attr('transform', 'translate(' + [1.5, 1.5] + ')');
+    SVG.transition().duration(INITIALIZED ? 250 : 0)
         .attr('height', ((g.graph().height > 0) ? g.graph().height : 0) + 3)
         .attr('width', ((g.graph().width > 0) ? g.graph().width : 0) + 3);
 
@@ -135,9 +129,7 @@ function legendClicks() {
 }
 
 function filterChange() {
-    var svg = d3.select('#filter');
-
-    svg.on('input', function () {
+    FILTER.on('input', function () {
         setTimeout(update, 0);
     });
 }
@@ -153,7 +145,7 @@ function update() {
     reset();
     hideTooltip();
 
-    var filter = d3.select('#filter').node().value;
+    var filter = FILTER.node().value;
 
     filter = filter ? filter.toLowerCase() : null;
 
@@ -235,22 +227,17 @@ function getCostTable(item) {
 }
 
 function hideTooltip() {
-    var div = d3.select('.tooltip');
-
-    div
+    DIV
         .style('opacity', 0)
         .style('left', 0 + 'px')
         .style('top', 0 + 'px');
 }
 
 function tooltip() {
-    var div = d3.select('.tooltip');
-
     d3.selectAll('#reset')
         .on('click', function () {
             d3.event.preventDefault();
-            var filter = d3.select('#filter').node();
-            filter.value = '';
+            FILTER.node().value = '';
             setTimeout(update, 0);
         });
 
@@ -258,8 +245,7 @@ function tooltip() {
     d3.selectAll('svg.chart .node')
         .on('click', function (d) {
             var item = XCOM_TECH_TREE[d];
-            var filter = d3.select('#filter').node();
-            filter.value = item.title;
+            FILTER.node().value = item.title;
             setTimeout(update, 0);
         })
         .on('mousemove', function (d) {
@@ -267,7 +253,7 @@ function tooltip() {
 
             item.table = item.table || getCostTable(item);
 
-            div
+            DIV
                 .attr('class', 'tooltip ' + item.type)
                 .html('<b>' + item.title + '</b>' +
                     '<br>' +
