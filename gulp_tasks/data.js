@@ -41,6 +41,9 @@ function optimizeItems(result) {
         nameId[i.name] = index;
         delete i.name;
 
+        // fix "type" singular form
+        i.type = i.type.replace(/s$/gi, '');
+
         // optimize "cost"
         if (i.cost) {
             var cost = [];

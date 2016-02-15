@@ -1,6 +1,6 @@
 var DISABLED = {};
 var LEGEND_GRAPH;
-var TYPES = ['building', 'research', 'proving', 'items', 'drop', 'misc'];
+var TYPES = ['building', 'research', 'proving', 'item', 'drop', 'misc'];
 var INITIALIZED = false;
 
 function run() {
