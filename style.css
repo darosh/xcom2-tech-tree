@@ -26,6 +26,12 @@ input {
     height: 22px;
 }
 
+#reset {
+    display: block;
+    margin-top: 5px;
+    margin-left: 7px;
+}
+
 .pull-left {
     float: left;
 }
