@@ -34,6 +34,12 @@ function optimizeItems(result) {
         i.title = i.title.replace(/.*_.*_(.*)/gi, '$1');
         i.title = i.title.replace(/([a-z])([A-Z])/g, '$1 $2');
 
+        var reqMatch = /\(Req: (.*)\)$/gi.exec(i.title);
+
+        if(reqMatch) {
+            i.required = reqMatch[1];
+        }
+
         // remove ending bracketed note from "title"
         i.title = i.title.replace(/ \(.*\)/gi, '');
 
