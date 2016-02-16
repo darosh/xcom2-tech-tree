@@ -300,6 +300,22 @@ function tools() {
             delayedUpdate();
         });
 
+    d3.select('#save')
+        .on('click', function () {
+            d3.event.preventDefault();
+
+            var source = getSource(document.querySelectorAll('svg.chart')[0], getStyles(document));
+            var url = window.URL.createObjectURL(new Blob(source, {'type': 'text/xml'}));
+            var a = document.getElementById('download');
+            a.setAttribute('href', url);
+            a.style['display'] = 'none';
+            a.click();
+
+            setTimeout(function () {
+                window.URL.revokeObjectURL(url);
+            }, 10);
+        });
+
     d3.select('#shortcuts')
         .on('click', function () {
             d3.event.preventDefault();
