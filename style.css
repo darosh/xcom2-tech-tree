@@ -66,8 +66,16 @@ text {
 }
 
 .disabled {
-    fill-opacity: 0.2;
-    stroke-opacity: 0.2;
+    fill-opacity: 0.24;
+}
+
+.disabled text {
+    fill-opacity: 0.36;
+}
+
+.disabled rect {
+    stroke-opacity: 0.16;
+    stroke-dasharray: 4 2;
 }
 
 .legend > * {
