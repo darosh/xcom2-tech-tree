@@ -8,6 +8,7 @@ var ROOT = SVG.select('g');
 var DIV = d3.select('.tooltip');
 var FILTER = d3.select('#filter');
 var SHORTCUTS = true;
+var HORIZONTAL = false;
 
 function run() {
     LEGEND_GRAPH = legend();
@@ -66,7 +67,7 @@ function legend() {
 function chart() {
     var g = new dagreD3.graphlib.Graph()
         .setGraph({
-            rankdir: 'LR',
+            rankdir: HORIZONTAL ? 'TB' : 'LR',
             nodesep: 20,
             ranksep: 20
         });
@@ -315,6 +316,17 @@ function tools() {
             setTimeout(function () {
                 window.URL.revokeObjectURL(url);
             }, 10);
+        });
+
+    d3.select('#horizontal')
+        .on('click', function () {
+            d3.event.preventDefault();
+            HORIZONTAL = !HORIZONTAL;
+            var s = d3.select(this);
+            var t = s.text();
+            t = t.replace(HORIZONTAL ? ': off' : ': on', !HORIZONTAL ? ': off' : ': on');
+            s.text(t);
+            delayedUpdate();
         });
 
     d3.select('#shortcuts')
