@@ -192,13 +192,18 @@ function getCostTable(item) {
     if (item.cost) {
         var r = {};
         var k, i;
+        var m = 0;
 
         for (i = 0; i < item.cost.length; i++) {
             for (k in item.cost[i]) {
                 r[k] = r[k] || [];
                 r[k][i] = item.cost[i][k];
+                m = Math.max(m, i);
             }
         }
+
+
+        m++;
 
         if (item.instantCost) {
             for (i = 0; i < item.instantCost.length; i++) {
@@ -212,6 +217,10 @@ function getCostTable(item) {
         var t = '<table>';
 
         for (k in r) {
+            for (i = 0; i < m; i++) {
+                r[k][i] = r[k][i] !== undefined ? r[k][i] : '?';
+            }
+
             t += '<tr>';
             t += '<th>' + k + '</th>';
             t += '<td>' + r[k].join('</td><td>') + '</td>';
@@ -258,6 +267,7 @@ function tooltip() {
                 .html('<b>' + item.title + '</b>' +
                     '<br>' +
                     '<i>' + item.type + '</i>' +
+                    (item.required ? '<hr>' + '<table><tr><th>Required</th><td>' + item.required + '</td></tr></table>' : '') +
                     (item.table ? '<hr>' : '') +
                     item.table)
                 .style('opacity', 1)

@@ -96,6 +96,11 @@ text {
     background: #666;
 }
 
+.tooltip b {
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
 table {
     width: 100%;
 }
