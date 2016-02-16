@@ -305,6 +305,7 @@ function tools() {
             d3.event.preventDefault();
 
             var source = getSource(document.querySelectorAll('svg.chart')[0], getStyles(document));
+            source[0] = source[0].replace(/dy="1em"/gi, 'dy="14"');
             var url = window.URL.createObjectURL(new Blob(source, {'type': 'text/xml'}));
             var a = document.getElementById('download');
             a.setAttribute('href', url);
