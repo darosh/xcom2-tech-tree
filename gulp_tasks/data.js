@@ -43,6 +43,21 @@ function optimizeItems(result) {
         // remove ending bracketed note from "title"
         i.title = i.title.replace(/ \(.*\)/gi, '');
 
+        // shorter "title"
+        var abbrs = {
+            'Make Contact with Blacksite Region': 'Blacksite Region',
+            'Complete the ADVENT Blacksite Mission': 'Blacksite Mission',
+            'Complete Guerilla Ops': 'Guerilla Ops',
+            'Use Skulljack on ADVENT Officer': 'Skulljack ADVENT Officer',
+            'Use Skulljack on Codex': 'Skulljack Codex',
+            'Investigate the Blacksite Vial Coordinates': 'Blacksite Vial Coordinates',
+            'Investigate Codex Brain Coordinates': 'Codex Brain Coordinates',
+            'See which and how many enemies are in a mission': 'Mission Intel',
+            'Assault ADVENT Broadcast Tower': 'Broadcast Tower'
+        };
+
+        i.title = abbrs[i.title] || i.title;
+
         // remove "name"
         nameId[i.name] = index;
         delete i.name;
