@@ -7,12 +7,14 @@ var SVG = d3.select('svg.chart');
 var ROOT = SVG.select('g');
 var DIV = d3.select('.tooltip');
 var FILTER = d3.select('#filter');
+var SHORTCUTS = true;
 
 function run() {
     LEGEND_GRAPH = legend();
     chart();
     legendClicks();
     filterChange();
+    tools();
     hierarchy();
 }
 
@@ -73,9 +75,11 @@ function chart() {
         var radius = item.parent ? 11 : 0;
 
         if (!item.hide) {
+            var d = SHORTCUTS && item.disable;
+
             g.setNode(index, {
-                label: item.disable ? '…' : item.title,
-                class: item.type + (item.disable ? ' disabled' : ''),
+                label: d ? '…' : item.title,
+                class: item.type + (d ? ' disabled' : ''),
                 height: 22,
                 rx: radius,
                 ry: radius,
@@ -124,13 +128,13 @@ function legendClicks() {
 
         DISABLED[TYPES[d]] = !DISABLED[TYPES[d]];
         e.classed('disabled', DISABLED[TYPES[d]]);
-        setTimeout(update, 0);
+        delayedUpdate();
     });
 }
 
 function filterChange() {
     FILTER.on('input', function () {
-        setTimeout(update, 0);
+        delayedUpdate();
     });
 }
 
@@ -139,6 +143,10 @@ function reset() {
         item.hide = false;
         item.disable = false;
     });
+}
+
+function delayedUpdate() {
+    setTimeout(update, 20);
 }
 
 function update() {
@@ -243,19 +251,11 @@ function hideTooltip() {
 }
 
 function tooltip() {
-    d3.selectAll('#reset')
-        .on('click', function () {
-            d3.event.preventDefault();
-            FILTER.node().value = '';
-            setTimeout(update, 0);
-        });
-
-
     d3.selectAll('svg.chart .node')
         .on('click', function (d) {
             var item = XCOM_TECH_TREE[d];
             FILTER.node().value = item.title;
-            setTimeout(update, 0);
+            delayedUpdate();
         })
         .on('mousemove', function (d) {
             var item = XCOM_TECH_TREE[d];
@@ -267,7 +267,8 @@ function tooltip() {
                 .html('<b>' + item.title + '</b>' +
                     '<br>' +
                     '<i>' + item.type + '</i>' +
-                    (item.required ? '<hr>' + '<table><tr><th>Required</th><td>' + item.required + '</td></tr></table>' : '') +
+                    (item.required ? '<hr>' +
+                    '<table><tr><th>Required</th><td>' + item.required + '</td></tr></table>' : '') +
                     (item.table ? '<hr>' : '') +
                     item.table)
                 .style('opacity', 1)
@@ -275,4 +276,24 @@ function tooltip() {
                 .style('top', (d3.event.pageY) + 'px');
         })
         .on('mouseout', hideTooltip);
+}
+
+function tools() {
+    d3.select('#reset')
+        .on('click', function () {
+            d3.event.preventDefault();
+            FILTER.node().value = '';
+            delayedUpdate();
+        });
+
+    d3.select('#shortcuts')
+        .on('click', function () {
+            d3.event.preventDefault();
+            SHORTCUTS = !SHORTCUTS;
+            var s = d3.select(this);
+            var t = s.text();
+            t = t.replace(SHORTCUTS ? ': off' : ': on', !SHORTCUTS ? ': off' : ': on');
+            s.text(t);
+            delayedUpdate();
+        });
 }
