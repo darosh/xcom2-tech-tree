@@ -205,7 +205,9 @@ function hide() {
     });
 }
 
-function getCostTable(item) {
+function getCostArray(item) {
+    var t = {};
+
     if (item.cost) {
         var r = {};
         var k, i;
@@ -231,13 +233,28 @@ function getCostTable(item) {
             }
         }
 
-        var t = '<table>';
-
         for (k in r) {
             for (i = 0; i < m; i++) {
                 r[k][i] = r[k][i] !== undefined ? r[k][i] : '?';
             }
 
+            t[k] = r[k];
+        }
+    }
+
+    return t;
+}
+
+function getCostTable(item) {
+    var t = '';
+
+    if (item.cost) {
+        t += '<table>';
+
+        var r = getCostArray(item);
+        var t = '<table>';
+
+        for (var k in r) {
             t += '<tr>';
             t += '<th>' + k + '</th>';
             t += '<td>' + r[k].join('</td><td>') + '</td>';
@@ -245,11 +262,9 @@ function getCostTable(item) {
         }
 
         t += '</table>';
-
-        return t;
     }
 
-    return '';
+    return t;
 }
 
 function hideTooltip() {
@@ -293,6 +308,42 @@ function tooltip() {
         .on('mouseout', hideTooltip);
 }
 
+function getCsv() {
+    var header = ['Id', 'Title', 'Type', 'Parent', 'Required',
+        'Supplies', 'Intel', 'Upkeep', 'Power', 'Elerium', 'Elerium Core', 'Alloy', 'Engineer', 'Scientist', 'Corpse'];
+
+    var rows = [header];
+
+    XCOM_TECH_TREE.forEach(function (item, index) {
+        var row = [];
+
+        row.push(index);
+        row.push(item.title);
+        row.push(item.type);
+        row.push(item.parent ? item.parent.join(', ') : '');
+        row.push(item.required ? item.required : '');
+
+        var a = getCostArray(item);
+
+        for (var k in a) {
+            var index = header.indexOf(k);
+
+            if (index < 0) {
+                index = header.length;
+                header.push(k);
+            }
+
+            row[index] = a[k].join(', ');
+        }
+
+        rows.push('"' + row.join('","') + '"');
+    });
+
+    rows[0] = header.join(',');
+
+    return rows.join('\n');
+}
+
 function tools() {
     d3.select('#reset')
         .on('click', function () {
@@ -310,6 +361,25 @@ function tools() {
             var url = window.URL.createObjectURL(new Blob(source, {'type': 'text/xml'}));
             var a = document.getElementById('download');
             a.setAttribute('href', url);
+            a.setAttribute('download', 'xcom2-tech-tree.svg');
+            a.style['display'] = 'none';
+            a.click();
+
+            setTimeout(function () {
+                window.URL.revokeObjectURL(url);
+            }, 10);
+        });
+
+
+    d3.select('#export')
+        .on('click', function () {
+            d3.event.preventDefault();
+
+            var source = getCsv();
+            var url = window.URL.createObjectURL(new Blob([source], {'type': 'text/csv'}));
+            var a = document.getElementById('download');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'xcom2-tech-tree.csv');
             a.style['display'] = 'none';
             a.click();
 
