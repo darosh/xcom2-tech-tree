@@ -1,6 +1,6 @@
 var DISABLED = {};
 var LEGEND_GRAPH;
-var TYPES = ['building', 'research', 'proving', 'item', 'drop', 'misc'];
+var TYPES = ['building', 'research', 'proving', 'item', 'drop', 'misc', 'skill'];
 var INITIALIZED = false;
 var RENDER = new dagreD3.render();
 var SVG = d3.select('svg.chart');

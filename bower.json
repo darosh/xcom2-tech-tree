@@ -4,6 +4,6 @@
   "private": true,
   "dependencies": {
     "dagre-d3": "^0.4.17",
-    "XCom2TechTree": "https://raw.githubusercontent.com/mstum/xcom2/master/techtree/XComTT/XComTT/XCom2TechTree.xml"
+    "XCom2TechTree": "https://raw.githubusercontent.com/mstum/xcom2/0abc7a97eb6297932e5629cdc029cc8636b77800/techtree/XComTT/XComTT/XCom2TechTree.xml"
   }
 }
