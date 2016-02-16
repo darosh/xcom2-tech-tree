@@ -34,9 +34,9 @@ function optimizeItems(result) {
         i.title = i.title.replace(/.*_.*_(.*)/gi, '$1');
         i.title = i.title.replace(/([a-z])([A-Z])/g, '$1 $2');
 
-        var reqMatch = /\(Req: (.*)\)$/gi.exec(i.title);
+        var reqMatch = /\(Req: (.*),/gi.exec(i.title);
 
-        if(reqMatch) {
+        if (reqMatch) {
             i.required = reqMatch[1];
         }
 
@@ -54,7 +54,7 @@ function optimizeItems(result) {
         if (i.cost) {
             var cost = [];
 
-            i.cost.forEach(function (ci) {
+            (i.cost.forEach ? i.cost : [i.cost]).forEach(function (ci) {
                 cost[ci.difficulty] = optimizeCostItems(ci.costItem[0] ? ci.costItem : [ci.costItem]);
             });
 
