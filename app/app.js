@@ -120,7 +120,6 @@ function chart() {
 
 function legendClicks() {
     var svg = d3.select('svg.legend');
-
     var nodes = svg.selectAll('.node');
 
     nodes.on('click', function (d) {
@@ -129,6 +128,15 @@ function legendClicks() {
         DISABLED[TYPES[d]] = !DISABLED[TYPES[d]];
         e.classed('disabled', DISABLED[TYPES[d]]);
         delayedUpdate();
+    });
+}
+
+function legendStatus() {
+    var svg = d3.select('svg.legend');
+    var nodes = svg.selectAll('.node');
+
+    nodes.classed('disabled', function (d) {
+        return DISABLED[TYPES[d]];
     });
 }
 
@@ -255,6 +263,12 @@ function tooltip() {
         .on('click', function (d) {
             var item = XCOM_TECH_TREE[d];
             FILTER.node().value = item.title;
+
+            if (DISABLED[item.type]) {
+                DISABLED[item.type] = false;
+                setTimeout(legendStatus, 10);
+            }
+
             delayedUpdate();
         })
         .on('mousemove', function (d) {
