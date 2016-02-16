@@ -4,11 +4,14 @@ html, body {
 
 body {
     padding: 14px 14px 28px 14px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 svg {
     display: block;
+}
+
+body, svg {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1 {
@@ -42,6 +45,10 @@ input {
 
 .clear {
     clear: both;
+}
+
+.hide {
+    display: none;
 }
 
 text {
