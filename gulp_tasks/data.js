@@ -37,7 +37,7 @@ function optimizeItems(result) {
         var reqMatch = /\(Req: (.*),/gi.exec(i.title);
 
         if (reqMatch) {
-            i.required = reqMatch[1];
+            i.required = fixTitle(reqMatch[1]);
         }
 
         // remove ending bracketed note from "title"
@@ -57,6 +57,7 @@ function optimizeItems(result) {
         };
 
         i.title = abbrs[i.title] || i.title;
+        i.title = fixTitle(i.title);
 
         // remove "name"
         nameId[i.name] = index;
@@ -94,18 +95,19 @@ function optimizeItems(result) {
 
             i.parent = parents;
         }
-
     });
 
     return items;
 }
 
-function getItemId(items, title) {
-    for (var i = 0; i < items.length; i++) {
-        if (items[i].title === title) {
-            return i;
-        }
-    }
+function fixTitle(text) {
+    return text
+        .replace('Engineers', 'Engineer')
+        .replace(' Corpse', '')
+        .replace(' Shell', '')
+        .replace('ADVENT ', '')
+        .replace('Sargeant', 'Sergeant')
+        .replace('Alien ', '');
 }
 
 function optimizeCostItems(costItems) {
@@ -114,7 +116,7 @@ function optimizeCostItems(costItems) {
     costItems.forEach(function (i) {
         var v = parseInt(i.value);
 
-        obj[i.type] = (v.toString() === i.value) ? v : i.value;
+        obj[fixTitle(i.type)] = (v.toString() === i.value) ? v : i.value;
     });
 
     return obj;
